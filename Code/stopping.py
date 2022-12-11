@@ -50,7 +50,7 @@ def MinPerfReq(score, args):
     best_CVscore = score[-1]
     feature_size = len(score)
     for i in range(len(score)-1, 0, -1):
-        delta = score[i] - score[i-1]
+        delta = best_CVscore - score[i]
         if delta > args.tolerence:
             feature_size = i + 1
             break
@@ -63,7 +63,6 @@ def MaxScore(score, args):
     for i in range(len(score)-1, -1, -1):
         current_size = i + 1
         adj_score = score[i] - (args.rho * current_size)
-        print(adj_score)
         if adj_score > best_performance:
             best_performance = adj_score
             feature_size = i + 1
