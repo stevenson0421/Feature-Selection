@@ -49,7 +49,7 @@ def MaxDelta(score, args):
 def MinPerfReq(score, args):
     best_CVscore = score[-1]
     feature_size = len(score)
-    for i in range(len(score)-1, 0, -1):
+    for i in range(len(score)-1, -1, -1):
         delta = best_CVscore - score[i]
         if delta > args.tolerence:
             feature_size = i + 1
