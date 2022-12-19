@@ -100,12 +100,12 @@ from sklearn.model_selection import cross_val_score
 # In[ ]:
 
 
-subset_all = pd.read_csv('../Results/Feature_sets.csv').values
+subset_all = pd.read_csv('../Results/Individual_Feature_sets.csv').values
 
 
 # In[ ]:
 
-
+set_all = []
 union_all = []
 intersection_all = []
 qourum_all = []
@@ -117,6 +117,7 @@ for k in trange(train_X1.shape[1]):
     for c in train_X1.columns:
         candidates = subset_all[:, :k+1]
         count = np.count_nonzero(candidates == c)
+        #! Maybe have problem...
         if count > 0:
             unions.append(c)
         if count > len(subset_all) / 2:
@@ -129,9 +130,16 @@ for k in trange(train_X1.shape[1]):
 # print(union_all)
 # print(intersection_all)
 # print(qourum_all)
+set_all.append(union_all)
+set_all.append(intersection_all)
+set_all.append(qourum_all)
+
 print([len(union_all[i]) for i in range(len(union_all))])
 print([len(intersection_all[i]) for i in range(len(intersection_all))])
 print([len(qourum_all[i]) for i in range(len(qourum_all))])
+
+pd.DataFrame(set_all, index=['union', 'intersection', 'quorum']).to_csv('../Results/Set_Feature_sets.csv')
+raise Exception
 
 
 # In[ ]:

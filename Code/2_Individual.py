@@ -145,12 +145,8 @@ for sf in [chi2, f_classif, mutual_info_classif]:
     for k in trange(train_X1.shape[1]):
         # select one best feature and add it to subset
         selector.fit(train_X1.drop(cols, axis=1), train_Y)
-        scores = selector.pvalues_
-        #! PROBLEM, check if right.
-        index = np.argsort(scores)[::-1][-1]
-        f = train_X1.columns.drop(cols)[index]
-        # f = selector.get_feature_names_out(train_X1.columns.drop(cols))
-        cols.append(f)
+        f = train_X1.columns.drop(cols)[selector.get_support()]
+        cols.append(f[0])
     subset_all.append(cols)
     print(cols)
 
