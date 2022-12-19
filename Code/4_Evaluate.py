@@ -56,8 +56,7 @@ def main():
         
         plt.legend(loc='lower left')
         filename = key + '_F1'
-        plt.savefig('../Evaluation/' + filename + '.png')
-
+        plt.savefig('../Evaluation/MultiBar/' + filename + '.png')
 
     # tackle feature size figures
     for key, value in tasks.items():
@@ -84,7 +83,7 @@ def main():
 
 
         filename = key + '_size'
-        plt.savefig('../Evaluation/' + filename + '.png')
+        plt.savefig('../Evaluation/MultiBar/' + filename + '.png')
 
 
 

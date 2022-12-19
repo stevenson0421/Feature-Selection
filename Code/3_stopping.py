@@ -33,13 +33,16 @@ def main():
                 for index in record_df.index:
                     text_tuple = record_df.loc[index][column]
                     if tasks[i] == 'Set':
-                        score, time, size = text2tuple(text_tuple, tasks[i])
+                        score, _, size = text2tuple(text_tuple, tasks[i])
                         size_df.at[index, column] = size
                     else:
                         score, _ = text2tuple(text_tuple, tasks[i])
                     score_df.at[index, column] = score
-                    time_df.at[index, column] = time
             size_df = size_df.astype(int)
+            # mv F1_png method_1/F1_png
+            # mv MultiBar method_1/MultiBar
+            # mv Time_png method_1/Time_png
+
 
             plt.clf()
             for index in record_df.index:
