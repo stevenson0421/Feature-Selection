@@ -27,16 +27,18 @@ def main():
             # read the results, extract their score parts.
             record_df = pd.read_csv('../Results/' + filename + '.csv', index_col=0)
             score_df = pd.DataFrame(index=record_df.index)
+            time_df = pd.DataFrame(index=record_df.index)
             size_df = pd.DataFrame(index=record_df.index)
             for column in record_df.columns:
                 for index in record_df.index:
                     text_tuple = record_df.loc[index][column]
                     if tasks[i] == 'Set':
-                        score, _, size = text2tuple(text_tuple, tasks[i])
+                        score, time, size = text2tuple(text_tuple, tasks[i])
                         size_df.at[index, column] = size
                     else:
                         score, _ = text2tuple(text_tuple, tasks[i])
                     score_df.at[index, column] = score
+                    time_df.at[index, column] = time
             size_df = size_df.astype(int)
 
             plt.clf()
@@ -63,10 +65,10 @@ def main():
             plt.xlabel('Number of Features')
             plt.ylabel('F1 Score')
             # plt.xlim((1, 25))
-            plt.ylim((0.6, 1))
+            # plt.ylim((0.6, 1))
             plt.legend()
             plt.grid()
-            plt.savefig(os.path.join('../Results/F1_png', filename + '.png'))
+            plt.savefig(os.path.join('../Evaluation/F1_png', filename + '.png'))
 
 
     print(len(stop_df_all))
