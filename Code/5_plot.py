@@ -14,7 +14,7 @@ def main():
 
             F1_filename = tasks[i] + '_F1_' + models[j]
             # read the results, extract their score parts.
-            F1_df = pd.read_csv('../Results/' + F1_filename + '.csv', index_col=0)
+            F1_df = pd.read_csv('./Results/KDDCUP99/' + F1_filename + '.csv', index_col=0)
 
             score_df = pd.DataFrame(index=F1_df.index)
             size_df = pd.DataFrame(index=F1_df.index)
@@ -44,12 +44,43 @@ def main():
             # plt.ylim((0.6, 1))
             plt.legend()
             plt.grid()
-            plt.savefig(os.path.join('../Evaluation/F1_png', F1_filename + '.png'))
+            if not os.path.exists('./Evaluation/KDDCUP99/F1_png/'):
+                os.makedirs('./Evaluation/KDDCUP99/F1_png/')
+            plt.savefig(os.path.join('./Evaluation/KDDCUP99/F1_png', F1_filename + '.png'))
 
+            F1_filename = tasks[i] + '_F1_' + models[j]
+            # read the results, extract their score parts.
+            F1_df = pd.read_csv('./Results/KDDCUP99/' + F1_filename + '_Test.csv', index_col=0)
 
+            score_df = pd.DataFrame(index=F1_df.index)
+            size_df = pd.DataFrame(index=F1_df.index)
+
+            for column in F1_df.columns:
+                for index in F1_df.index:
+                    score = F1_df.loc[index][column]
+                    score_df.at[index, column] = score
+
+            size_df = size_df.astype(int)
+
+            plt.clf()
+            for index in F1_df.index:
+                index_score = score_df.loc[index].values
+                # save the stopping feature size by different methods
+                index_all.append(tasks[i] + '_' + models[j] + '_' + index)
+                plt.plot(range(1, len(index_score)+1), index_score,  linestyle='-', label=index)
+
+            plt.xlabel('Number of Features')
+            plt.ylabel('Test Score')
+            # plt.xlim((1, 25))
+            # plt.ylim((0.6, 1))
+            plt.legend()
+            plt.grid()
+            if not os.path.exists('./Evaluation/KDDCUP99/F1_png/'):
+                os.makedirs('./Evaluation/KDDCUP99/F1_png/')
+            plt.savefig(os.path.join('./Evaluation/KDDCUP99/F1_png', F1_filename + '_Test.png'))
             
             Time_filename = tasks[i] + '_Time_' + models[j]
-            Time_df = pd.read_csv('../Results/' + Time_filename + '.csv', index_col=0)
+            Time_df = pd.read_csv('./Results/KDDCUP99/' + Time_filename + '.csv', index_col=0)
             time_df = pd.DataFrame(index=Time_df.index)
 
             for column in Time_df.columns:
@@ -72,7 +103,9 @@ def main():
             # plt.ylim((0.6, 1))
             plt.legend()
             plt.grid()
-            plt.savefig(os.path.join('../Evaluation/Time_png', Time_filename + '.png'))
+            if not os.path.exists('./Evaluation/KDDCUP99/Time_png/'):
+                os.makedirs('./Evaluation/KDDCUP99/Time_png/')
+            plt.savefig(os.path.join('./Evaluation/KDDCUP99/Time_png', Time_filename + '.png'))
 
 
 def text2tuple(text, task):

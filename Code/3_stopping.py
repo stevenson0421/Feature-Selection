@@ -25,19 +25,23 @@ def main():
 
             filename = tasks[i] + '_F1_' + models[j]
             # read the results, extract their score parts.
-            record_df = pd.read_csv('../Results/' + filename + '.csv', index_col=0)
+            record_df = pd.read_csv('./Results/KDDCUP99/' + filename + '.csv', index_col=0)
+            record2_df = pd.read_csv('./Results/KDDCUP99/' + filename + '_Test.csv', index_col=0)
             score_df = pd.DataFrame(index=record_df.index)
+            test_df = pd.DataFrame(index=record_df.index)
             time_df = pd.DataFrame(index=record_df.index)
             size_df = pd.DataFrame(index=record_df.index)
             for column in record_df.columns:
                 for index in record_df.index:
                     text_tuple = record_df.loc[index][column]
+                    test = record2_df.loc[index][column]
                     if tasks[i] == 'Set':
                         score, _, size = text2tuple(text_tuple, tasks[i])
                         size_df.at[index, column] = size
                     else:
                         score, _ = text2tuple(text_tuple, tasks[i])
                     score_df.at[index, column] = score
+                    test_df.at[index, column] = test
             size_df = size_df.astype(int)
             # mv F1_png method_1/F1_png
             # mv MultiBar method_1/MultiBar
@@ -47,6 +51,7 @@ def main():
             plt.clf()
             for index in record_df.index:
                 index_score = score_df.loc[index].values
+                index_test = test_df.loc[index].values
                 # Get stopping points by the following methods.
                 stop_index1 = MaxDelta(index_score, args, tasks[i], size_df.loc[index])
                 stop_index2 = MinPerfReq(index_score, args, tasks[i], size_df.loc[index])
@@ -56,26 +61,19 @@ def main():
                 stop_acc1 = index_score[stop_index1]
                 stop_acc2 = index_score[stop_index2]
                 stop_acc3 = index_score[stop_index3]
+                stop_test1 = index_test[stop_index1]
+                stop_test2 = index_test[stop_index2]
+                stop_test3 = index_test[stop_index3]
                 index_all.append(tasks[i] + '_' + models[j] + '_' + index)
                 if tasks[i] == 'Set':
-                    info = [size_df.loc[index][str(stop_index1)], stop_acc1, size_df.loc[index][str(stop_index2)], stop_acc2, size_df.loc[index][str(stop_index3)], stop_acc3]
+                    info = [size_df.loc[index][str(stop_index1)], stop_acc1, stop_test1, size_df.loc[index][str(stop_index2)], stop_acc2, stop_test2, size_df.loc[index][str(stop_index3)], stop_acc3, stop_test3]
                 else:
-                    info = [stop_index1+1, stop_acc1, stop_index2+1, stop_acc2, stop_index3+1, stop_acc3]
+                    info = [stop_index1+1, stop_acc1, stop_test1, stop_index2+1, stop_acc2, stop_test2, stop_index3+1, stop_acc3, stop_test3]
                 stop_df_all.append(info)
-
-                plt.plot(range(1, len(index_score)+1), index_score,  linestyle='-', label=index)
-
-            plt.xlabel('Number of Features')
-            plt.ylabel('F1 Score')
-            # plt.xlim((1, 25))
-            # plt.ylim((0.6, 1))
-            plt.legend()
-            plt.grid()
-            plt.savefig(os.path.join('../Evaluation/F1_png', filename + '.png'))
 
 
     print(len(stop_df_all))
-    pd.DataFrame(stop_df_all, index=index_all, columns=['MaxDelta', 'MD_score', 'MinPerfReq', 'MPR_score', 'MaxScore', 'MS_score']).to_csv('../Results/stopping_points.csv')
+    pd.DataFrame(stop_df_all, index=index_all, columns=['MaxDelta', 'MD_score', 'MD_test', 'MinPerfReq', 'MPR_score', 'MPR_test', 'MaxScore', 'MS_score', 'MS_test']).to_csv('./Results/KDDCUP99/stopping_points.csv')
 
 
 def text2tuple(text, task):

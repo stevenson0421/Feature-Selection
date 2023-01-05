@@ -13,9 +13,9 @@ tasks = ['LR', 'GB', 'DNN']
 methods = ['union', 'intersection', 'quorum']
 
 def main():
-    set_df = pd.read_csv('../Results/Set_Feature_sets.csv', index_col=0)
+    set_df = pd.read_csv('./Results/KDDCUP99/Set_Feature_sets.csv', index_col=0)
     for task in tasks:
-        method_df = pd.read_csv('../Results/_Set_F1_'+task+'.csv', index_col=0)
+        method_df = pd.read_csv('./Results/KDDCUP99/_Set_F1_'+task+'.csv', index_col=0)
         for method in methods:
             feature = set_df.loc[method].values
 
@@ -43,7 +43,7 @@ def main():
                     # print(method_df)
                     method_df.at[method, str(i)] = method_df.loc[method, str(i-1)]
 
-        method_df.to_csv('../Results/Set_F1_'+task+'.csv')
+        method_df.to_csv('./Results/KDDCUP99/Set_F1_'+task+'.csv')
 
 
 def text2list(text):
