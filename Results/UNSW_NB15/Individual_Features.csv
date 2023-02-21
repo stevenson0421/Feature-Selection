@@ -1,0 +1,8 @@
+,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23
+chi2,swin,sttl,ct_dst_sport_ltm,dload,dtcpb,stcpb,rate,dmean,ct_state_ttl,sinpkt,dttl,sload,synack,ct_flw_http_mthd,smean,dinpkt,dpkts,sjit,ct_ftp_cmd,spkts,response_body_len,djit,trans_depth,dur
+ANOVA,sttl,swin,ct_dst_sport_ltm,rate,ct_state_ttl,dtcpb,stcpb,dload,dmean,synack,sload,sinpkt,dttl,ct_flw_http_mthd,dpkts,smean,dinpkt,spkts,sjit,djit,trans_depth,ct_ftp_cmd,response_body_len,dur
+mutualinfo,smean,sload,ct_state_ttl,rate,dur,dmean,dttl,dinpkt,dload,sttl,dpkts,synack,sinpkt,ct_dst_sport_ltm,sjit,spkts,djit,stcpb,swin,dtcpb,response_body_len,ct_flw_http_mthd,trans_depth,ct_ftp_cmd
+sfs(gb),ct_state_ttl,smean,sttl,dttl,synack,dload,dmean,dur,dpkts,sinpkt,djit,dinpkt,sload,rate,spkts,sjit,response_body_len,swin,ct_ftp_cmd,ct_flw_http_mthd,ct_dst_sport_ltm,stcpb,dtcpb,trans_depth
+sfs(lr),sttl,dload,rate,ct_state_ttl,dmean,sinpkt,synack,swin,response_body_len,dpkts,dur,sload,trans_depth,dinpkt,djit,spkts,sjit,ct_ftp_cmd,ct_flw_http_mthd,smean,dtcpb,stcpb,ct_dst_sport_ltm,dttl
+im(gb),sttl,ct_state_ttl,sload,rate,ct_dst_sport_ltm,dur,smean,dpkts,dmean,dload,dttl,sinpkt,swin,spkts,synack,dinpkt,sjit,djit,stcpb,dtcpb,response_body_len,ct_flw_http_mthd,trans_depth,ct_ftp_cmd
+im(lr),synack,trans_depth,sload,djit,spkts,response_body_len,dpkts,dmean,ct_dst_sport_ltm,swin,sttl,rate,sinpkt,dinpkt,dload,ct_state_ttl,ct_flw_http_mthd,dtcpb,stcpb,sjit,smean,ct_ftp_cmd,dttl,dur
